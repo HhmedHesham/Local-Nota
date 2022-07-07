@@ -4,7 +4,7 @@ import '../models/note_model.dart';
 
 class NotesDatabase {
   // singleton instance of the database "which is global to the app"
-  static final NotesDatabase _instance = NotesDatabase._init();
+  static final NotesDatabase instance = NotesDatabase._init();
 
   //create field for database
   static Database? _database;
@@ -51,20 +51,20 @@ class NotesDatabase {
 
   // close the database
   Future<void> close() async {
-    final db = await _instance.database;
+    final db = await instance.database;
     db.close();
   }
 
   // create a note
   Future<NoteModel> createNote(NoteModel note) async {
-    final db = await _instance.database;
+    final db = await instance.database;
     note.id = await db.insert(tableNotes, note.toJson());
     return note;
   }
 
   // read note bt ID
   Future<NoteModel> readNote(int id) async {
-    final db = await _instance.database;
+    final db = await instance.database;
     final List<Map<String, dynamic>> maps = await db.query(
       tableNotes,
       where: '${NoteFields.id} = ?',
@@ -79,7 +79,7 @@ class NotesDatabase {
 
   // read all notes
   Future<List<NoteModel>> readAllNotes() async {
-    final db = await _instance.database;
+    final db = await instance.database;
     const orderBy = '${NoteFields.date} ASC';
     // final result =  await db.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
     final List<Map<String, dynamic>> maps =
@@ -91,7 +91,7 @@ class NotesDatabase {
 
   // update a note
   Future<int> updateNote(NoteModel note) async {
-    final db = await _instance.database;
+    final db = await instance.database;
     return await db.update(
       tableNotes,
       note.toJson(),
@@ -102,7 +102,7 @@ class NotesDatabase {
 
   // delete note
   Future<int> deleteNote(int id) async {
-    final db = await _instance.database;
+    final db = await instance.database;
     return await db.delete(
       tableNotes,
       where: '${NoteFields.id} = ?',

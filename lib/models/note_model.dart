@@ -52,4 +52,23 @@ class NoteModel {
       date: DateTime.parse(map[NoteFields.date] as String),
     );
   }
+
+  // copy method
+  NoteModel copyWith({
+    int? id,
+    required int number,
+    required bool isImportnant,
+    required String title,
+    required String description,
+    required DateTime date,
+  }) {
+    return NoteModel(
+      id: id ?? this.id,
+      number: number ?? this.number,
+      isImportnant: isImportnant ?? this.isImportnant,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      date: date ?? this.date,
+    );
+  }
 }
