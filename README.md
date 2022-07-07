@@ -5,4 +5,4 @@ I used sqflite to store the data on the local storage
 
 # 📸 ScreenShots 
 
-# Pre-Requiestes 
+# ✨ Pre-Requiestes 
