@@ -54,4 +54,26 @@ class NotesDatabase {
     final db = await _instance.database;
     db.close();
   }
+
+  //create a note
+  Future<NoteModel> createNote(NoteModel note) async {
+    final db = await _instance.database;
+    note.id = await db.insert(tableNotes, note.toMap());
+    return note;
+  }
+
+  //read note bt ID
+  Future<NoteModel> readNote(int id) async {
+    final db = await _instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      tableNotes,
+      where: '${NoteFields.id} = ?',
+      whereArgs: [id],
+    );
+    if (maps.isNotEmpty) {
+      return NoteModel.fromMap(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
 }

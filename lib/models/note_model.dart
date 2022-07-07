@@ -40,4 +40,16 @@ class NoteModel {
       NoteFields.date: date.toIso8601String(),
     };
   }
+
+  //fromMap method
+  factory NoteModel.fromMap(Map<String, dynamic> map) {
+    return NoteModel(
+      id: map[NoteFields.id] as int,
+      number: map[NoteFields.number] as int,
+      isImportnant: map[NoteFields.isImportnant] == 1,
+      title: map[NoteFields.title] as String,
+      description: map[NoteFields.description] as String,
+      date: DateTime.parse(map[NoteFields.date] as String),
+    );
+  }
 }
