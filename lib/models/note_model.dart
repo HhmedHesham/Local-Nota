@@ -29,7 +29,7 @@ class NoteModel {
     required this.date,
   });
   //toMap method
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       NoteFields.id: id,
       NoteFields.number: number,

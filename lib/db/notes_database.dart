@@ -12,7 +12,7 @@ class NotesDatabase {
   // initialize the database
   NotesDatabase._init();
 
-  //open database
+  // open database
   Future<Database> get database async {
     // if exists, return the database
     if (_database != null) {
@@ -55,14 +55,14 @@ class NotesDatabase {
     db.close();
   }
 
-  //create a note
+  // create a note
   Future<NoteModel> createNote(NoteModel note) async {
     final db = await _instance.database;
-    note.id = await db.insert(tableNotes, note.toMap());
+    note.id = await db.insert(tableNotes, note.toJson());
     return note;
   }
 
-  //read note bt ID
+  // read note bt ID
   Future<NoteModel> readNote(int id) async {
     final db = await _instance.database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -77,7 +77,7 @@ class NotesDatabase {
     }
   }
 
-  //read all notes
+  // read all notes
   Future<List<NoteModel>> readAllNotes() async {
     final db = await _instance.database;
     const orderBy = '${NoteFields.date} ASC';
@@ -87,5 +87,26 @@ class NotesDatabase {
     return List.generate(maps.length, (i) {
       return NoteModel.fromJson(maps[i]);
     });
+  }
+
+  // update a note
+  Future<int> updateNote(NoteModel note) async {
+    final db = await _instance.database;
+    return await db.update(
+      tableNotes,
+      note.toJson(),
+      where: '${NoteFields.id} = ?',
+      whereArgs: [note.id],
+    );
+  }
+
+  // delete note
+  Future<int> deleteNote(int id) async {
+    final db = await _instance.database;
+    return await db.delete(
+      tableNotes,
+      where: '${NoteFields.id} = ?',
+      whereArgs: [id],
+    );
   }
 }
