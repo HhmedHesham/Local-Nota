@@ -42,7 +42,7 @@ class NoteModel {
   }
 
   //fromMap method
-  factory NoteModel.fromMap(Map<String, dynamic> map) {
+  factory NoteModel.fromJson(Map<String, dynamic> map) {
     return NoteModel(
       id: map[NoteFields.id] as int,
       number: map[NoteFields.number] as int,

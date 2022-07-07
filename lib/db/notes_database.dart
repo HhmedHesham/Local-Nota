@@ -71,9 +71,21 @@ class NotesDatabase {
       whereArgs: [id],
     );
     if (maps.isNotEmpty) {
-      return NoteModel.fromMap(maps.first);
+      return NoteModel.fromJson(maps.first);
     } else {
       throw Exception('ID $id not found');
     }
+  }
+
+  //read all notes
+  Future<List<NoteModel>> readAllNotes() async {
+    final db = await _instance.database;
+    const orderBy = '${NoteFields.date} ASC';
+    // final result =  await db.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
+    final List<Map<String, dynamic>> maps =
+        await db.query(tableNotes, orderBy: orderBy);
+    return List.generate(maps.length, (i) {
+      return NoteModel.fromJson(maps[i]);
+    });
   }
 }
