@@ -64,11 +64,11 @@ class NoteModel {
   }) {
     return NoteModel(
       id: id ?? this.id,
-      number: number ?? this.number,
-      isImportnant: isImportnant ?? this.isImportnant,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      date: date ?? this.date,
+      number: number,
+      isImportnant: isImportnant,
+      title: title,
+      description: description,
+      date: date,
     );
   }
 }
